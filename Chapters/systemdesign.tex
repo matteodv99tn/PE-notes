@@ -84,7 +84,7 @@
 			P_{0,V} = 2 \sqrt{RkT (BW)_s}
 		\end{equation}
 		
-		When combining many electric and passive components, their noise sum up to combine into a \textbf{pink noise} (like a white noise, but with more components on higher frequencies) whose spectral density is defined by the function
+		When combining many electric and passive components, their noise sum up to combine into \textbf{pink noise} (like a white noise, but with more components on higher frequencies) whose spectral density is defined by the function
 		\[ G(f) = \frac C f + G_0 \]
 		Integrating this function over the frequency band of interest gives the variance $\sigma^2_V$ associated to this particular kind of noise
 		\begin{equation}
@@ -100,19 +100,95 @@
 		Pink noise and shot noise are the limiting factors on precision measurements where a phenomenon is converted through a transducer into a voltage or current. Much better precision can be exploited by converting a phenomenon into a value through time (needed, as example, for charging a capacitor or for a beam of light to travel a distance...) and not voltage/current; this time precision can reach value of $10^{-11} s$, increasing the precision of the overall system.
 	
 	
+\section{System design}
+	\de{System design} means giving a shape/architecture to a complex amount of components into a complex system that can be a full product (like a car) or just a subsystem of a bigger product (like an axil of a vehicle); in general dividing complex systems into subsystem is a trick to design products in a more manageable way. A good subsystem, to be so, should have the minimum connections/interfaces with the other components of the parent system. In system design we start from the needs of the problem and we architecture the system.
 	
+	Generally speaking, system design is strongly related to the \textbf{costs} of the project itself; in the design we can define three main phases:
+	\begin{enumerate}
+		\item determine and acknowledging the requires and the specification of the machine;
+		\item designing the concept of the system;
+		\item designing the final product.
+	\end{enumerate}
 	
+	\begin{SCfigure}[1][bht]
+		\centering
+		\includegraphics[width=6cm]{committed-incurred-costs}
+		\caption{committed and incurred costs of a system design during the 3 phases.}
+		\label{fig:des:commincurr}
+	\end{SCfigure}
 	
+	As seen in figure \ref{fig:des:commincurr}, we can see that there are two principles \textbf{costs}: the \textbf{incurred} one, associated to the actually spent money on the project, and the \textbf{committed} one, associated to design decision made (like for example by determining the choice of a material, you will automatically create a future cost of production).
 	
+	The chart in figure \ref{fig:des:commincurr} is in conflict with the one in figure \ref{fig:des:knowfreed}: when you start creating your system, every possible choice is open and there is the maximum freedom; while developing the product it also increase the problem knowledge that, consequentially, limit the freedom. This is the so called \textbf{designer paradox}, and in general starting from zero knowledge can make the engineer take wrong decision: this will inevitably impact on the chart of costs by dragging them up. \\
+	The best way is to have a problem knowledge curve that is as steeper as possible, while maintaining the freedom curve \textit{high} for the most time.
+			
+	\begin{SCfigure}[1][bht]
+		\centering
+		\includegraphics[width=6cm]{knowledge-freedom}
+		\caption{design freedom and problem knowledge while designing a system.}
+		\label{fig:des:knowfreed}
+	\end{SCfigure}
+
+	Another problem in system design is the human processing of the information, and in particular we can find the short term memory and the long term one. A good way to deal with huge problems is by decomposing them in order to store all the datas in long term memory a little by time.\\
+	In a more practical way this states that initial design steps are critical and so it is fundamental to clearly state and understand the target of our design process, and also its constraints. The division of system into subsystems comes handy in this way, in order to subdivide more manageable tasks (that can be handled by the short term memory).
 	
+	\subsection{QFD: House of Quality}
+		One of the best way to solve the first problem linked to the lack of problem knowledge is by using the so called \textbf{\textit{Quality Function Deployment Function}} \de{QFD}, also known as the \de{House of Quality} (name related to the shape of the diagram) shown in figure \ref{fig:des:qfd}.
 	
-	
-	
-	
-	
-	
-	
-	
+		\begin{figure}[bht]
+			\centering \includegraphics[width=8cm]{housequality}
+			\caption{general diagram of a house of quality (QFD).}
+			\label{fig:des:qfd}
+		\end{figure}
+		
+		This diagram consists in table of multiple vectors containing different values and meanings; in particular we can find the following important vector containing the choices about:
+		\begin{itemize}
+			\item the \textbf{whats}: this are the \textit{customer requirements}, so a desired set in the product required by the customer;
+			\item the \textbf{whos}: this are the customer of the product that can be the buyers, but also the sellers, the maintenance personal... (in general all the people that are reached by the product);
+			\item the \textbf{hows}: this are the engineering specification of the system (related to the thing mentioned above). In particular we define the \textit{whats} as qualitative requirements, while the \textit{hows} are quantities;
+			\item the \textbf{nows}: this are the competitors, so how the problem is already solved by other companies;
+			\item the \textbf{how muches}: this are the target for our specification.
+		\end{itemize}
+		In general the (\textbf{customer}) \de{requirements} are the properties of product attributes stated by the customer and they always shall be: discriminatory (no space for doubt to know if the concept is good or not), measurable, orthogonal, universal and must be external (they should not depend on how the interior of the product works, like for example a car must be responsive in changing speed, not it's sizes and number of cylinders).
+		
+		On the other hand the \de{specifications} are quantitative and measurable criteria that the product is designed to satisfy; in general the specifications are internal attributes, like for example that a car has to accelerate from $0 km/h$ to $100km/h$ in less then $6s$.
+		
+		\paragraph{Who} The first thing to do to create a QFD is by expliciting the customers that can be both external (to the organization, like the consumer) or internal. In general it's useful to find the main customer of the product.
+		
+		\paragraph{What} The second step is to identify the customer requirements and this can be very tricky. In this step it's useful to see the \textbf{Kano's diagram} (figure \ref{fig:des:kano}) that shows the customer satisfaction in respect to the product function. In particular by time passing, the customer satisfaction passes from the green light to the red one, and this depends on the particular technology. By this sense, it's important to implement something that satisfies the customer more.
+
+		\begin{SCfigure}[0.6][b]
+			\centering
+			\includegraphics[width=7cm]{kano}
+			\caption{Kano's diagram.}
+			\label{fig:des:kano}
+		\end{SCfigure}
+		
+		At this stage it's possible to see 5 different types of requirements:
+		\begin{itemize}
+			\item the attractive requirements, made to turn on delightment;
+			\item one-dimensional requirements associated to performance of the product;
+			\item mandatory requirements (red line in diagram \ref{fig:des:kano}) that are necessary to avoid the risk of disgustment;
+			\item indifferent requirements that are not necessary to the main customer, but are worth for secondary customer;
+			\item the reverse requirements that are valid for other customer in contradiction (like someone wants a handle light, someone heavy). In general a design is always a trade-off of requirements contradictions.
+		\end{itemize}
+		In general the way to identify the customers requirements are by using collection methods (surveys of random people or by using focused groups), or by collecting them in general therm (no jargon) that are then translated in engineering form. \\
+		The customer requirements can be: functional, related to human factors, physical, time-related (in a general way \textit{reliability}), lifecycle related, resource.
+		
+		\paragraph{Who vs what} The third step is to create a matrix comparing the whos and the whats of the product; this can be done by determining a relative importance of the various aspects by weighting and ranking the attributes. Traditionally we create an absolute ranking (1 to 10) of the requirements, but to avoid to give high rank to a lot of requirements, than a good idea is to allocate a fixed sum (100 points for example) to the attributes.
+		
+		\paragraph{Now} At this time we create a list of raw competitors and do a benchmarking (to create the now vs what column). This stage asses how every competitor comply with the requirements by rating existing design, for example, from 1 to 5.
+		
+		\paragraph{How} The fifth stage is to generate the engineering specifications, so how a certain requirement will be met. For every requirement it's necessary to generate as many as possible engineering parameters suitable for measuring it. If it's not possible to find a proper measurement unit, than this is not a specification of the design. For each specification it's necessary to add a direction of improvement.
+		
+		\paragraph{How vs what} At this time we can create a matrix relating the hows to the whats, and in particular defining the degree of relationship between the two data (for example a blank cell might describe no relation between the attributes, $\square$ might indicate a weak relation, $\ocircle$ a medium weigth relation and $\odot$ a stronger one).
+		
+		\paragraph{How much} On the bottom of the QFD we set the engineering target, measured if possible as a range (a minimum value that's related to \textit{disgusting} and a max value associated to \textit{delighted}), and if possible by confronting this results with the competitors.
+		
+		\paragraph{How vs how} This is a cross correlation matrix (that's why it's triangular) that's used to identify relationship between specifications by identifying duplicates and the trade-offs. This triangular matrix should be filled with values/symbols representing the degree of relationship.
+		
+	\subsection{Concepts generation}
+		
 	
 	
 	

@@ -200,12 +200,69 @@
 		Product decomposition is useful while re-designing an already exsisting system: this process can be done by removing one component at a time and, by doing so, documenting the associated loss of function. Later it's possible to create a table reporting, for each component, its connections and associated loss of function. By determining the function lossed, by reversing the idea we can get the atomic function that determine the original product.
 		
 		\paragraph{TRIZ} A method to create concept variance is the TRIZ method (translated from russian as \textit{Theory of The Resolution of Invention-Related Tasks}) developed by Genrikh Altshuller: by following this method it's possible to go straight from the problem to the solution. This is done by analysing pattern in patents for solution by sorting them by function rather then application.	\\
-		The aim of the system is to avoid the need for inspiration and trial \& error procedures and systematically find new ideas. At the core of this system there are contradictions and inventive principles:
-		\begin{itemize}
-			\item contradictions: there are always engineering trade-offs (like the weight/stiffness one) that has to be solved; to help this problematic it's possible to use a $39\times 39$ matrix (that can be found at \url{http://www.triz40.com/}) of features/parameters that can combines into contradictions: each cell reports one (or more) of the 40 inventive principles that can be used;
-			
-			\item 
-		\end{itemize}
+		The aim of the system is to avoid the need for inspiration and trial \& error procedures and systematically find new ideas. At the core of this system there are contradictions and inventive principles. In the design there are always contradictions that can be solved as trade-offs (like the weight/stiffness one); to help this problematic it's possible to use a $39\times 39$ matrix (that can be found at \url{http://www.triz40.com/}) of features/parameters that can combines into contradictions: each cell reports one (or more) of the 40 inventive principles that can be used.
+		
+	\subsection{Concept selection}
+		If all goes fine, at this point we have a handful of products concept available ($7\pm 2$) that are detailed enough to understand the physical laws and how the system should work. The problem at this stage is that we don't have enough knowledge, and so we need to create a method that is robust enough to compensate this lack; at first we shall analyse each concept individually and reject it if it's clearly defective, and only later compare them. At this point is also necessary to consider the \textbf{safety} of the concept in terms of: intrinsic safety, presence of safety devices/countermeasures or precautions against improper use; this operation might give some feedback to functional decomposition preciously done.\\
+		In this regard there is the military standard \texttt{MIL-STD 882B} that present a useful table that relates damage impact vs it's frequency.
+		
+		\begin{table}[bht]
+		\centering
+		\begin{tabular}{c c || c | c | c | c}
+			& & \textbf{I} & \textbf{II} & \textbf{III} & \textbf{IV} \\
+			& \textbf{Frequency} & Catastrophic & Critical & Marginal  & Negligible \\ \hline \hline
+			A & Frequent ($>10\%$) & 1 & 3 & 7 & 13 \\
+			B & Probable ($1-10\%$) & 2 & 5 & 9 & 16 \\
+			C & Occasional ($0.1-1\%$) & 4 & 6 & 11 & 18 \\
+			D & Remote ($0.001-0.1\%$) & 8 & 10 & 14 & 19 \\
+			E & Improbable ($<0.001\%$) & 12 & 15 & 17 & 20 \\
+		\end{tabular}
+		\caption{\texttt{MIL-STD 882B} table.} \label{fig:des:milstd}
+		\end{table}
+				
+		Each cell as a \textbf{risk} value ranging from 1 (high risk) to 20 (very low risk), where the acceptable values are $18$ or greater; values less then 5 are unacceptable while value ranging from 10 to 17 can be accepted with review.
+		
+		\vspace{3mm}
+		
+		After evaluating all the concepts by safety point of view and their feasibility (physical principles on the product have to be demonstrated and are technologically mature based on the \textbf{TRL} \textit{Technology Readiness Level} that has to be at least evaluated 7 to 9). Later it's possible to rank the concepts that is often made by using the \de{decision matrix}.
+		
+		The decision matrix is made by selecting some criteria  (from the QFD) and assigning them a weight that are going to be used to compare the concepts. At this stage it's important to pick a \textit{datum}, a reference that's used to create comparison. At this point, for each criteria and concept, it's possible to give scores ($1,0,-1$) and at the end calculating the result. In designing group every member should create it's tables interdependently in order to confront them at the end.\\
+		The problem of this decision matrix is that the evaluation is made by people that could have a limited knowledge (in respect to some criteria); to avoid this problem it's more preferable to use the \textbf{robust decision making} that states \textit{"good decision are based on uncertain knowledge"}. In order to this method to work we need to use the \textbf{belief map} that take in account both the knowledge and the confidence of the judge. Mathematically we can describe the belief as a convex (?) function dependent on the knowledge level $p(k)$ and confidence $p(c)$:
+		\[ \textrm{belief} = p(k)p(c) + \big(1-p(k)\big)\big(1-p(c)\big) \]		
+		\begin{SCfigure}[0.6][b]
+			\centering
+			\includegraphics[width=7cm]{beliefmap}
+			\caption{heat graph of a belief map.}
+			\label{fig:des:beliefmap}
+		\end{SCfigure}
+		
+		Now it's possible to use the belief value to fill up the decision matrix (and so not using the $\pm 1$ scores). At the end, for each concept, it's possible to compute the satisfaction level as
+		\[\textrm{satisfaction} = \sum_i \textrm{belief}_i \, W_i \]
+		where $W_i$ are the weight associated to the criteria.
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 	

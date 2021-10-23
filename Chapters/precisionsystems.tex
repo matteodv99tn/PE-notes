@@ -109,40 +109,76 @@
 	\end{equation}
 	where $D= 6$ for spatial mechanisms while $D= 3$ for planar kinematics. If $M>0$ then the mechanism is movable, for $M = 0$ the system is immovable while $M < 0$ it's over-constrained and so, in a real application, the structure will be subjected to unknown internal stresses that cannot be quantified (and so leading to imprecision).
 	
-	The Tchebytchev should be used with caution when dealing with bodies that present singularities	
+	The Tchebytchev should be used with caution when dealing with systems that present singularities that can be determined by considering the position of the instantaneous centers of rotation of the bodies composing the system. Given a body $a$, it's instantaneous center of rotation in respect to the body $b$ is written as $P_{ab}$ and depends on the local configuration of the system. Every time that the center $P_{ij}$ goes to infinity, than the related configuration is singular and the Tchebytchev mobility calculation isn't correct.
+	
+	\paragraph{Over and under-constrained mechanisms} Under od over-constrained mechanisms can have unexpected side-effects that are often resulting in a lack of repeatability (unknown deformation of the system or unknown motion of some elements). As a consequence in precision engineering it is relevant to rely on kinematic design (which means exact constraint design) in order to have an isostatic system.
+	
+	\begin{figure}[bht]
+		\centering
+		\includegraphics[width=7cm]{contactpointexample}
+		\caption{example of a kinematic design of a rotary shaft.}
+		\label{fig:ps:contactpointexample}
+	\end{figure}
+
+	Considering the example in figure \ref{fig:ps:contactpointexample} we can see that the tetrahedral groove determines 3 contact point, while the V groove add other 2, by determining a 1 degree of freedom of the shaft that's so free to rotate on it's axes. By replacing the V groove with another tetrahedral we have a $M=0$ and in order to have a mechanism that rotate we have to ensure that the shaft length is equal to the hole distance. An implementation of the previous kinematic design can be made with swivel ball (related to the V groove) and roller (tetrahedral) bearing as in figure \ref{fig:ps:contactsolution}.
+	
+	\begin{SCfigure}[2][bht]
+		\centering
+		\includegraphics[width=6cm]{contactpointexample-sol}
+		\caption{practical solution of the kinematic design of a rotary shaft drawn in figure \ref{fig:ps:contactpointexample}.}
+		\label{fig:ps:contactsolution}
+	\end{SCfigure}
+	
+	In general any deviation from purely kinematic design requires tighter tolerances and more stable materials that leads to increasing costs. In purely kinematic design it's required to use the minimum number of contact points that, as trade-off, increases the internal stress (and so decreasing the load capacity).
+	
+	\paragraph{Pseudo-kinematic design} To increase the load capacity we can use the so called \de{pseudo-kinematic design} by increasing the contact area while still providing constrains that are similar that are kinematic equivalent.
+	
+	\paragraph{Elastic averaging} Another approach that can be used to reduce the effects of machining inaccuracy is to use a large number of compliant coupling in order to spread the errors on a large area.	An example of this technique can be seen in figure \ref{fig:ps:elasticaveraging}.
+	
+	\begin{figure}[bht]
+		\centering
+		\includegraphics[width=9cm]{elasticavereging}
+		\caption{example of a system that uses elastic averaging in order to better create a kinematic connection between two components.}
+		\label{fig:ps:elasticaveraging}
+	\end{figure}
+	
+	\subsection{Kinematic couplings}
+		When designing a precision assembly we often need to precisely locate two subsystems respect to each other; sometimes we also want to isolate effects of strains acting on the frame element from a carried subsystem. In all this cases the coupling must be kinematic (by so determining a mobility $M=0$) in order to decouple the carried subsystem from effects of the carrier (like mechanical and thermals strains, manufacturing errors...).
+		
+		One of the most common type of kinematic coupling is the \textbf{Kelvin clamp} as in figure \ref{fig:ps:kelvinclamp}. In general good coupling design shall avoid overconstrained geometries (as example a pillar that have to support a high load, we don't use a pure flat surface but only a perimeter part of the cross section in order to minimize the surface in contact).
+		
+		\begin{SCfigure}[2][bht]
+			\centering
+			\includegraphics[width=6.5cm]{kelvinclamp}
+			\caption{Kelvin clamp of type I (on the left) and type II (right).} 
+			\label{fig:ps:kelvinclamp}
+		\end{SCfigure}
+		
+		\paragraph{Hertzian contacts} In order to describe the elastic interaction between contact point we can use the theory of the \de{Hertzian contacts} that allows to compute the pressure $p(r)$ and contact stiffness $K_n$ of a sphere on a sphere (or on a plane considering $R_2$ that tends to infinity). In particular the pressure on the surface and the contact stiffness can be calculated, depending on the applied force $F_n$, as
+		\begin{equation}
+			p(r) = p_0 \sqrt{1- \frac{r^2}{a^2}} \qquad K_n = \frac{dF_n}{d\delta} = 2\overline E \sqrt{\delta R}
+		\end{equation}
+		when the parameters can be computed as
+		\[ p_0 = \sqrt[3]{\frac{6 F_n E^2}{\pi^3 R^2}} \qquad a = \sqrt[3]{\frac{3F_n R}{4\overline E}} \qquad \delta = \frac{a^2}{R} = \sqrt[3]{ \frac{9F_n^2}{16\overline E^2 R} } \]
+		In order to compute the average $\overline E$ of the Young modules the following expression must be considered:
+		\[\frac 1 {\overline E} = \frac{1-\nu_1^2}{E_1} + \frac{1-\nu_2^2}{E_2} \]
+		\textbf{FIGURA DEL CONTATTO, SLIDE 41}
+		
+		Considering instead the contact of a cylinder on a cylinder the surface pressure depended from the deviation $x$ on the ideal contact line and is equal to
+		\begin{equation}
+			p(x) = p_0 \sqrt{1- \frac{r^2}{b^2}}
+		\end{equation}
+		where
+		\[ p_0 = \frac{2F_n}{\pi b L } = \sqrt{\frac{F_b\overline E}{\pi RL}} \qquad b = \sqrt{\frac{4F_nR}{\pi \overline E L}} \qquad \delta = \frac{F_n}{\pi \overline E L} \left[ 1 + \ln \left(\frac{\pi L^3\overline E}{PR}\right) \right] \]
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		\paragraph{Dowel pins} A common need is to precisely mount a plate onto a base and this operation is often performed by the \textbf{dowel pins}: each pin locks one degree of freedom on the plane, so 3 pins can be used to kinematic constrain a plate in a planar kinematic. In reality this pins are unilateral constrains and so a 4-th locking point is needed.
+		
+		\textbf{DISCORSO SUL CALCOLO DEI MOMENTI ROTAZIONE PER CAPIRE SE I PIN SONO SUFFICIENTI, MAGARI RIVEDERE LEZIONE}
 	
 
 \section{Flexure hinges}
-	
+	\de{Flexure hinges} are made as a substitute to the conventional rotational joint by using an elastic deformation of a single element (so with no movable part) that allows to have a more repeatable motion of the mechanism.
 	
 	
 	

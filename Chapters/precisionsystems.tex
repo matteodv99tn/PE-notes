@@ -154,23 +154,33 @@
 			\label{fig:ps:kelvinclamp}
 		\end{SCfigure}
 		
-		\paragraph{Hertzian contacts} In order to describe the elastic interaction between contact point we can use the theory of the \de{Hertzian contacts} that allows to compute the pressure $p(r)$ and contact stiffness $K_n$ of a sphere on a sphere (or on a plane considering $R_2$ that tends to infinity). In particular the pressure on the surface and the contact stiffness can be calculated, depending on the applied force $F_n$, as
+	\subsection{Hertzian contacts} 
+		In order to describe the elastic interaction between contact point we can use the theory of the \de{Hertzian contacts} that allows to compute the pressure $p(r)$ and contact stiffness $K_n$ of a sphere on a sphere (or on a plane considering $R_2$ that tends to infinity). In particular the pressure $p$ on the surface, the displacement $\delta$ the contact stiffness $K_n$ can be calculated, depending on the applied force $F_n$, as
 		\begin{equation}
-			p(r) = p_0 \sqrt{1- \frac{r^2}{a^2}} \qquad K_n = \frac{dF_n}{d\delta} = 2\overline E \sqrt{\delta R}
+			p(r) = p_0 \sqrt{1- \frac{r^2}{a^2}} \qquad \delta = \frac{a^2}{R} = \sqrt[3]{ \frac{9F_n^2}{16\overline E^2 R} } \qquad K_n = \frac{dF_n}{d\delta} = 2\overline E \sqrt{\delta R}
 		\end{equation}
 		when the parameters can be computed as
-		\[ p_0 = \sqrt[3]{\frac{6 F_n E^2}{\pi^3 R^2}} \qquad a = \sqrt[3]{\frac{3F_n R}{4\overline E}} \qquad \delta = \frac{a^2}{R} = \sqrt[3]{ \frac{9F_n^2}{16\overline E^2 R} } \]
-		In order to compute the average $\overline E$ of the Young modules the following expression must be considered:
-		\[\frac 1 {\overline E} = \frac{1-\nu_1^2}{E_1} + \frac{1-\nu_2^2}{E_2} \]
-		\textbf{FIGURA DEL CONTATTO, SLIDE 41}
+		\[ p_0 = \sqrt[3]{\frac{6 F_n E^2}{\pi^3 R^2}} \qquad a = \sqrt[3]{\frac{3F_n R}{4\overline E}}  \]
+		In order to compute the average $\overline E$ of the Young modules and the equivalent contact radius $R$ the following expression must be considered:
+		\[\frac 1 {\overline E} = \frac{1-\nu_1^2}{E_1} + \frac{1-\nu_2^2}{E_2} \qquad \frac 1 R = \frac 1 {R_1} + \frac 1 {R_2}\]
+		\begin{SCfigure}[3][bht]
+			\centering
+			\includegraphics[width=5cm]{hertian-point}
+			\caption{scheme to refer when considering the hertzian contact of a sphere on a sphere. On the left the macro picture of the contact with the main dimensions and on the left the heap map of the pressure distribution on the contact surface.}
+		\end{SCfigure}
 		
-		Considering instead the contact of a cylinder on a cylinder the surface pressure depended from the deviation $x$ on the ideal contact line and is equal to
+		Considering instead the contact of a cylinder on a cylinder the surface pressure $p$ and it's displacement $\delta$ depends from the deviation $x$ on the ideal contact line and are equals to
 		\begin{equation}
-			p(x) = p_0 \sqrt{1- \frac{r^2}{b^2}}
+			p(x) = p_0 \sqrt{1- \frac{r^2}{b^2}} \qquad \delta = \frac{F_n}{\pi \overline E L} \left[ 1 + \ln \left(\frac{\pi L^3\overline E}{PR}\right) \right]
 		\end{equation}
 		where
-		\[ p_0 = \frac{2F_n}{\pi b L } = \sqrt{\frac{F_b\overline E}{\pi RL}} \qquad b = \sqrt{\frac{4F_nR}{\pi \overline E L}} \qquad \delta = \frac{F_n}{\pi \overline E L} \left[ 1 + \ln \left(\frac{\pi L^3\overline E}{PR}\right) \right] \]
-	
+		\[ p_0 = \frac{2F_n}{\pi b L } = \sqrt{\frac{F_b\overline E}{\pi RL}} \qquad b = \sqrt{\frac{4F_nR}{\pi \overline E L}}  \]
+		
+		\begin{SCfigure}[2][bht]
+			\centering
+			\includegraphics[width=4cm]{hertian-cyl}
+			\caption{scheme to refer while considering the hertzian contact of two cylinders.}
+		\end{SCfigure}
 	
 		\paragraph{Dowel pins} A common need is to precisely mount a plate onto a base and this operation is often performed by the \textbf{dowel pins}: each pin locks one degree of freedom on the plane, so 3 pins can be used to kinematic constrain a plate in a planar kinematic. In reality this pins are unilateral constrains and so a 4-th locking point is needed.
 		
@@ -180,10 +190,49 @@
 \section{Flexure hinges}
 	\de{Flexure hinges} are made as a substitute to the conventional rotational joint by using an elastic deformation of a single element (so with no movable part) that allows to have a more repeatable motion of the mechanism.
 	
+	Relative motion between two members of a mechanism can in fact be implemented by sliding/rolling (that introduces a certain degree of backlash and so uncertainty due to physical phenomena such friction, hysteresis, roughness...) or by using an elastic deformation (that's more reliable in terms of accuracy and so repeatability); the only drawback of this kind of hinges is that they are repeatable nut only in a limited extent (in order to maintain the elastic property of the material). Usually this kind of connection is cheaper. 
 	
+	A \de{flexure} (or \textbf{flexure hinge}) is a localized volume in a rigid body that presents much higher flexibility (or lower stiffness in other words) typically thanks to a significant reduction in the cross section. In a lumped model, flexure hinges can be considered as springs.
 	
+	\paragraph{Leaf spring} The simplest type of rotary flexure hinge is the \textbf{leaf spring} that's behaves as a cantilever beam like in figure \ref{fig:ps:cantbeam}.
 	
+	\begin{SCfigure}[1][bht]
+		\centering \includegraphics[width=8cm]{cantileverbeam}
+		\caption{leaf spring model of the flexure hinge as a cantilever beam.}
+		\label{fig:ps:cantbeam}
+	\end{SCfigure}
 	
+	From  thin beam theory it's possible to compute the bending moment for a generic distance $x$ from the constraint as
+	\[ M(x) = F_y (L-x) = EI \frac{d^2y}{dx^2} \]
+	By integration of this relation we can compute the deflection $y(x)$ of the beam and it's slope $\theta(x) = dy/dx$:
+	\begin{equation}
+	\begin{aligned}
+		EI \frac{dy}{dx} & = F_y \left( FX - \frac{x^2}{2} \right) + c_1 \qquad & \Rightarrow \quad \theta(x) &= \frac{F_y}{EI} \left(Lx - \frac{x^2}{2}\right) \\
+		EI y & = F_y \left(L\frac{x^2}{2} - \frac{x^3}{6}\right) +c_1 x + c_2\qquad & \Rightarrow \quad y(x) &= \frac{F_y}{EI} \left(L\frac{x^2}{2} - \frac{x^3}{6}\right) 		
+	\end{aligned}
+	\end{equation}
+
+	In the hypothesis of small displacements the slope $\theta_z$ of the beam is equal to the angle measured at the tip and also the vertical displacement $\delta_y$ can be computed as
+	\begin{equation}
+		\theta_z = \theta(L) = \frac{F_y L^2}{2EI} \qquad \delta_y = y(L) = \frac{F_yL^3}{3EI}
+	\end{equation}
+	
+	This expression also allows to compute the angular and linear stiffness by considering different set of displacement/actions:
+	\begin{equation}
+		k_{\theta_zF_y} = \frac{F_y}{\theta_z} = \frac{2EI}{L^2} \qquad k_{\theta_zM_z} = \frac{M_z}{\theta_z} = \frac{2EI}{L} \qquad k_{\delta_y F_y} = \frac{F_y}{\delta_y} = \frac{3EI}{L^3}
+	\end{equation}
+	
+	Given the maximum allowable deflection slope $\theta_{max}$, we can calculate the maximum thickness $t$ (in $y$ direction in respect to figure \ref{fig:ps:cantbeam}) of the hinge in order not to yield the material by satysfying the relation
+	\begin{equation}
+		\frac{Et}{2L} \theta_{max} \leq \sigma_y \qquad \Rightarrow \quad t \leq \frac{2L}{E\theta_{max}} \sigma_y
+	\end{equation}
+	This also gives the maximum stiffness as 
+	\[ k_{\theta_zM_z,max} = \frac{2EI_{max}}{L} = \frac{2Ebt^3_{max}}{12L} = \frac{4bL^2}{3E^2}\left(\frac{\sigma_y}{\theta_{max}}\right)^3 \]
+	
+	By using the cantilever as a hinge, we need to know the location of the pivot point; although it depends on the amount of deflection, for small displacements even the displacement of the pivot point is small. So we can assume it has its initial position at the intersection between the two tangents at the free and at the at the constrained edge of the beam by giving the length
+	\[ s = \frac{\delta_y}{\tan\theta_z} \simeq \frac 2 3 L \]
+	so in general we can consider the the pivot point of a cantilever leaf spring is located at $1/3$ of it's length from the fixed end. \\
+	In general this kind of hinge presents better response on traction than compression (where instability might occur). Multiple leaf springs can be combined to realize mechanisms, as a four-bar-linkage, obtained from a single block of metal machine by wire-EDM (\textit{elettro erorsione}).
 	
 	
 	

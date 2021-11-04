@@ -104,7 +104,7 @@
 	\end{SCfigure}
 	
 	\paragraph{Mobility of mechanisms} Considering now  a combination of $n$ rigid bodies constrained by $j$ joints can lead to a movable or immovable system. The net mobility of the mechanism is its number of degrees of freedom and can be calculated according to Tchebytchev as
-	\begin{equation}
+	\begin{equation} \label{eq:ps:mobility}
 		M = D\big(n-1-j\big) +\sum_i f_i = D\big(n-1\big) -\sum_j n_{p_j}
 	\end{equation}
 	where $D= 6$ for spatial mechanisms while $D= 3$ for planar kinematics. If $M>0$ then the mechanism is movable, for $M = 0$ the system is immovable while $M < 0$ it's over-constrained and so, in a real application, the structure will be subjected to unknown internal stresses that cannot be quantified (and so leading to imprecision).
@@ -229,26 +229,137 @@
 	This also gives the maximum stiffness as 
 	\[ k_{\theta_zM_z,max} = \frac{2EI_{max}}{L} = \frac{2Ebt^3_{max}}{12L} = \frac{4bL^2}{3E^2}\left(\frac{\sigma_y}{\theta_{max}}\right)^3 \]
 	
-	By using the cantilever as a hinge, we need to know the location of the pivot point; although it depends on the amount of deflection, for small displacements even the displacement of the pivot point is small. So we can assume it has its initial position at the intersection between the two tangents at the free and at the at the constrained edge of the beam by giving the length
+	By using the cantilever as a hinge, we need to know the location of the pivot point (defined by the length $s$ as in figure \ref{fig:ps:cantbeam}); although it depends on the amount of deflection, for small displacements even the displacement of the pivot point is small. So we can assume it has its initial position at the intersection between the two tangents at the free and at the at the constrained edge of the beam by giving the length
 	\[ s = \frac{\delta_y}{\tan\theta_z} \simeq \frac 2 3 L \]
 	so in general we can consider the the pivot point of a cantilever leaf spring is located at $1/3$ of it's length from the fixed end. \\
 	In general this kind of hinge presents better response on traction than compression (where instability might occur). Multiple leaf springs can be combined to realize mechanisms, as a four-bar-linkage, obtained from a single block of metal machine by wire-EDM (\textit{elettro erorsione}).
 	
+	More complex equations can consider also the axial load $F_x$ and torque moment $M_z$, but for now we neglect
+	\begin{note}
+		More information can be found on the book \textit{Flexure Elements of Elastic Mechanisms} (Stuart T. Smith), chapter 4.1.
+	\end{note}
+
+	\subsection{Notch hinge}
+		A \de{notch hinge} (figure \ref{fig:ps:notch-hinges}) is easier to manufacture (respect to the leaf spring) and it's composed by a beam with two notches of circular/elliptical/rectangular shape. The main parameter $\varepsilon$ allows to define how \textit{circular} ($\varepsilon = 1$) or \textit{rectangular} ($\varepsilon\rightarrow \infty$) the notch is and it's defined as
+		\begin{equation}
+			\varepsilon = \frac{a_x}{a_y} \qquad \beta = \frac{t}{2a_x}
+		\end{equation}
+	
+		\begin{figure}[bht]
+			\centering
+			\includegraphics[width=10cm]{noth-hinges}
+			\caption{examples of notch hinges depending on the parameters $\varepsilon$ and technical drawings used to compute $\varepsilon,\beta$.}
+			\label{fig:ps:notch-hinges}
+		\end{figure}
+	
+		Related to this kind og hinges we can define the moment stiffness (that depends on a \textit{complex} function $f$ of the parameter $\beta$) with a particular approximation for small values of $\beta$:
+		\[ k_{\theta_zM_z} = \frac{2Rb a_x^2}{3f(\beta)} \approx \frac{2Eba_x^2}{3} \frac{\sqrt[2]{(2\beta)^5}}{3\pi} = \frac{2Eb \sqrt {t^5}}{9\pi \sqrt{a_x}} \]
+		The true  stress $\sigma$ can be determined as function of the applied moment $M_z$ ot the rotation $\theta_z$:
+		\[ \sigma = \sqrt[20]{(1+\beta)^9} \frac{6M_z}{t^2b} = \frac{4 E a_x^2 }{f(\beta)t^2}\sqrt[20]{(1+\beta)^9} \theta_z = \frac{ E \sqrt[20]{(1+\beta)^9}}{\beta^2 f(\beta)} \theta_z \]
+		
+		By considering that $\sigma$ should always be less than the yielding strength (to avoid yielding) we can compute the maximum thickness $t_{max}$ of the notch hinge to avoid this phenomena:
+		\[ t_{max} = \sqrt{ \frac{4Ea_x^2}{f(\beta)} \sqrt[20]{(1+\beta)^9} \frac{\theta_z}{\sigma_{ys}} } \]
+		\textbf{MANCA LA FORMULA APPROSSIMATA CHE è DA CHIEDERE AL PROFESSORE}
+		
+		With this consideration we can also define the maximum angular stiffness as
+		\[ k_{\theta_z M_z,max} = \frac{\pi^4 b a_x^2}{19 \sqrt[4]{1+\beta}E^4 } \left( \frac{\sigma_{ys}}{\theta_z} \right) \]
+		
+		
+		\vspace{3mm}
+		
+		This kind of hinges are used only when low angle deflection are required ($10-15^\circ$), while when larger deflections are used it might be better to use \textbf{cross street pivot}  or a \textbf{cartwheel hinge} (figure \ref{fig:ps:cartwheelhinges}); this solutions are preferred with respect to the leaf spring due to the fact that the pivot point/hinge axes is fixed and doesn't move depending on the displacement.
+		
+		\begin{SCfigure}[1][bht]
+			\centering
+			\includegraphics[width=6cm]{cartwheel-hinge}
+			\caption{cross street pivot (on the left) and cartwheel (right) hinges.}
+			\label{fig:ps:cartwheelhinges}
+		\end{SCfigure}
+		
+		An other way to create a cross strip pivot is by installing (with a rotation of $90^\circ$ relative angle) 2 orthogonal drilled notch hinges as shown in figure \ref{fig:ps:crossstrip}.
+		
+		\begin{SCfigure}[1][bht]
+			\centering
+			\includegraphics[width=6cm]{cross-strip}
+			\caption{example of a cross strip pivots realised with 2 orthogonal drilled notch hinges.} \label{fig:ps:crossstrip}
+		\end{SCfigure}
+		
+		
+		To create high precision system is recommended the use of metals (instead of plastic) in order to reduce the effect of the hysteresis on the flexure hinges.
 	
 	
+	\subsection{Rectilinear motion mechanism with flexure hinges}
+		\paragraph{Flexure system} A \de{flexure system} is a mechanism implemented with rigid bodies connected by flexure hinges; typically it's a monolithic structure (so made by one whole piece). This kind of systems limits as much as possible the number of components hence improving precision (in fact there are no hysteresis, friction but also the interaction between different materials). \\
+		If we want to deal with multiple materials we have to ensure kinematic coupling in order to avoid undesired force transmission due to thermal changes on the components.
+		
+		\paragraph{Simple linear spring mechanism} A linear spring mechanism can be implemented as a quadrilateral with parallel links.
+		
+		\begin{SCfigure}[2][bht]
+			\centering
+			\includegraphics[width=6.5cm]{rect-spring}
+			\caption{implementation of a rectilinear motion with leaf spring flexures.}
+			\label{fig:ps:rect:spring}
+		\end{SCfigure}
 	
+		When using leaf spring flexures, as shown in figure \ref{fig:ps:rect:spring}, the stiffness along the $x$ axis can be computed considering the 4 hinges as
+		\[ k_{\delta_xF_x} = \frac{24EI_{zz}}{L^3} = 2 Eb \left( \frac tL\right)^3 \]
+		Doing an impedances analyses it also possible to compute the free natural frequency of the system that's equal to
+		\[ f_{n_x} = \frac{\omega_{n_x}}{2\pi} = \frac{1}{2\pi} \sqrt{\frac{k_{\delta_xF_x}}{M + \frac{26}{35}m}} = \frac 1 {2\pi} \sqrt{\frac{24 EI_{zz}}{L^3\left( M + \frac{26}{35}m \right)} }  \]
+		where $m$ is the mass of the suspended bar while $M$ is the mass of the leaf spring bar.
+		
+		The same mechanism of mechanism can be also realised considering the usage of notch hinges (instead of the leaf spring) as in figure \ref{fig:ps:rect:notch}.
+		
+		\begin{SCfigure}[2][bht]
+			\centering
+			\includegraphics[width=6.5cm]{rect-notch}
+			\caption{implementation of a rectilinear motion with notch hinges.}
+			\label{fig:ps:rect:notch}
+		\end{SCfigure}
 	
+		This system behaves differently and determines a different angular stiffness and natural frequency response (that's usually higher than the leaf spring implementation):
+		\begin{align*}
+			k_{\delta_xD_x} & = \frac{F_x}{\delta_x} = \frac{4 k_{\theta_zM_z}}{L^{*2}} = \frac{8 E b \sqrt{t^5}}{9\pi \sqrt R L^{*2}} \\
+			\omega^2_{n_x} & = \sqrt{\frac{4k_{\theta_zM_z}}{M_AL^{*2} + 2 M_CL^2\left( \frac 1 3 + \frac R L + 4\frac{R^2}{L^2} \right)  }}
+		\end{align*}
+		
+		This kind of mechanism, for slow deviation of the tip, can be approximated as a linear motion; sometimes for particular application the mechanism should realize a circular motion, and for small angles that can be defined considering the instantaneous center of rotation of the four bar linkage as the example in figure \ref{fig:ps:circmotion}.
+		
+		\begin{SCfigure}[2][bht]
+			\centering
+			\includegraphics[width=5cm]{circular-motion}
+			\caption{four bar linkage realised with flexure elements that allows circular motion of the top bar (for small deviations).}
+			\label{fig:ps:circmotion}
+		\end{SCfigure}
+		
+		Considering that mechanism the points on the top bar $A$ are set to follow a circular motion in respect to the instantaneous center of rotation (this approximation holds for small deviation from the nominal position) and in particular given the length $l_i$ of the various bars we can compute the distance $h$ of the center of instantaneous rotation and the radius $R^*$ of the circular motion as
+		\begin{align*}
+			h & = \frac{l_B s}{l_B-l_A} \\
+			R^* & = \frac{l_As}{\big(l_B-l_A\big) \cos\left(\frac \pi 2 -\theta\right) = \frac{l_Al_C}{l_B-l_A} }
+		\end{align*}
 	
+		In general this kind of mechanisms are reliable only of the stiffness of the hinges is lumped, so it's very localized in order to consider linkages way much stiffer (rigid bodies) for most of the part.
+		
+		\paragraph{Compound rectilinear spring} If we have a strong specification on motion rectilinearity we can use a \textbf{compound rectilinear mechanism} to ensure this requirement.
+		
+		\begin{SCfigure}[2][bht]
+			\centering
+			\includegraphics[width=5cm]{rect-comp-1}
+			\caption{compound rectilinear spring used to increase the linearity of the motion on the plate $A$.}
+			\label{fig:ps:rect:comp}
+		\end{SCfigure}
+		
+		Considering the Tchebytchev equation \ref{eq:ps:mobility} (page \pageref{eq:ps:mobility}) we have that the mobility of the mechanism is equal to $2$ and so we have two coordinates (in this case $x_A,x_B$) we have more complex natural modes of the system but this allows to have a linear motion of the block $A$ in respect to the base (considering that all the hinges presents the same stiffness). Also this consideration holds considering quasi-static movement (so ignoring the inertia of the part composing the system).
+		
+		Joining this compounded rectilinear spring with a mirrored version (as in figure \ref{fig:ps:rect:mirrcomp}) we define a mechanism with one degree of mobility (according to Tchebytchev) even on non static conditions. This implementation also present built-in hard stops that prevents the yielding of the hinges while deflecting.
+		
+		\begin{SCfigure}[2][bht]
+			\centering
+			\includegraphics[width=5cm]{rect-comp-2}
+			\caption{improved compound rectilinear spring from the version in figure \ref{fig:ps:rect:comp} with mobility $M=1$ obtained by joining the original piece with a mirrored copy. The red circles shown the hard stop of motion realized by the frame in order to avoid yielding.}
+			\label{fig:ps:rect:mirrcomp}
+		\end{SCfigure}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		\textbf{FIGURA}
 	
 	
 	

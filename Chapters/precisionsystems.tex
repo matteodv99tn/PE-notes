@@ -359,24 +359,54 @@
 			\label{fig:ps:rect:mirrcomp}
 		\end{SCfigure}
 	
-		\textbf{FIGURA}
+	\subsection{Flexure levers}
+		While dealing with precision system another function that's needed is the the mechanical gain that can be obtained by a lever: in flexure system we refer to this functions as \de{flexure levers}. In particular when the gain is larger than 1, than the displacement is amplified (typically used on sensors), while when the gain is smaller than one allows to perform micro positioning (used on actuators). We have to consider that swapping input and output the gain inverses.
+		
+		This kind of mechanism can be realised with \textbf{rigid} levers or by using combination of \textbf{soft-sprint/stiff-spring} attenuation configurations (used for precise actuators), like the one in figure \ref{fig:ps:softstiff}.
+		
+		\begin{SCfigure}[1][bht]
+			\centering
+			\includegraphics[width=6cm]{soft-stiff-lever}
+			\caption{example of a soft-spring/stiff-spring attenuation flexure mechanism.}
+			\label{fig:ps:softstiff}
+		\end{SCfigure}
+		
+		When talking about a lever we define the \textbf{lever ratio} $n$ as
+		\begin{equation}
+			n = \frac{\textrm{output displacement}}{\textrm{input displacement}} = \frac{x_1}{x_2}
+		\end{equation}
+		Considering figure \ref{fig:ps:leverpoint} we can see that when the pivot point is between the input and the output we have $n = \frac ba$, while when the pivot is on the outside the ratio become $n = \frac{a+b}{a}$.
 	
+		\begin{figure}[bht]
+			\centering \includegraphics[width=12cm]{leverpoint}
+			\caption{example of levers where the pivot point is between (on the left) or on the outside (right) respect to the pivot point.}
+			\label{fig:ps:leverpoint}
+		\end{figure}
 	
+		\paragraph{Two bar lever} Let's consider the case of a two bar lever (as in figure \ref{fig:ps:twovarlever}) for which, using the Tchebytchev formula (eq. \ref{eq:ps:mobility}), the system present one degree of freedom.
+		
+		\begin{SCfigure}[2][b]
+			\centering
+			\includegraphics[width=5cm]{two-bar-lever}
+			\caption{schematic representation (with main design parameters) of a two bar lever.} \label{fig:ps:twovarlever}
+		\end{SCfigure}
+		In this case the point $3$ is the pivot (with so a fixed position); considering the sketched length of the bar it's possible to compute the lever ratio considering that the input position is $x_1$; in particular noting that the displacements can be computed $x_1 = x_2\tan\theta$, then we can observe how the lever ratio depend on the cotangent of the angle $\theta_1$ between the two bars:
+		\[ x_2 \tan \theta_1 = x_1 \qquad \Rightarrow \quad n = \cot\theta_1 = \frac{l_0-l_2}{h} = \frac{\sqrt{l_1^2-h^2}}{h} \]
+		Considering the derivative of the lever ration respect to the angle $\theta_1$, we can determine the relative lever ratio sensitivity on that parameter and so
+		\[ \frac{dn}{d\theta_1} = - \csc^2 \theta_1 = - \left( \frac{l_1}{h} \right)^2 \]
+		In case of this mechanism we can observe that for $\theta_1 \simeq 0$ the lever ratio is big, however the displacement $x_2$ becomes less linear (respect to $x_1$), while increasing $\theta_1$ the ratio decreases (increasing the linearity). \vspace{3mm}
+		
+		Considering now the case where the displacement $x_1$ is applied on a generic direction inclined by an angle $\theta_2$ (as in figure \ref{fig:ps:twovarlever-2}) we can calculate the lever ratio of both the angle deflection $\theta_3$ of the rigid body and the displacement of the point 2:
+		\[ n_\textrm{disp} = \frac{x_2}{x_1} = \sin\theta_2 + \frac{\cos \theta_2}{\tan\theta_1} \qquad n_\textrm{rot} = \frac{\theta_3}{x_1} = \frac 1 {l_2} \left( \sin\theta_2 + \frac{\cos\theta_2}{\tan\theta_1} \right)\]
+		\begin{SCfigure}[2][b]
+			\centering
+			\includegraphics[width=5cm]{two-bar-lever-2}
+			\caption{schematic representation (with main design parameters) of a two bar lever with a general input displacement angle $\theta_2$.} \label{fig:ps:twovarlever-2}
+		\end{SCfigure}
 	
+		\paragraph{Soft-spring/stiff-spring attenuation} Considering such flexure system (as in figure \ref{fig:ps:softstiff}) and considering that we have two equivalent springs such that $k_1\ll k_3$, with this implementation we can have a highly linear mechanism (within the elastic range) with extremely large attenuation ($10\,000:1$), however low value of stiffness can stimulate vibrations on the systems.
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		\paragraph{Lost motion} While dealing with flexure lever mechanisms the parasite stiffness can contribute to the lost motion, so a reduction of theoretical lever ratio.
 	
 	
 	

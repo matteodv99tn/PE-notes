@@ -1,0 +1,119 @@
+\chapter{Measurements}
+\section{Dimensional metrology}
+	The \de{dimensional metrology} is the study of geometrical measurements (such lengths, areas, roughness). The \textbf{confidence} in the dimensions of this measurement systems is critical for their operation and establishes an agreement between the vendor and the customer on the quality being traded.
+	
+\subsection*{Length standards}
+	A \textbf{measurement standard} is a practical realization of the definition of a measurement unit. As example the first international standard of length was a platinum-iridium bar names \textit{International Prototype Metre}; now the definition is changed and a meter is the length of the path travelled by the light in a vacuum in $1/299\,792\,458s $ (and so it's now a derived unit).
+	
+	The idea of standard allows the definition of the traceability chains (usually consisting of 4 levels) that's transferred between levels using calibration.
+	
+	\begin{SCfigure}[1][bht]
+		\centering \includegraphics[width=7cm]{trace-levels}
+		\caption{pyramid representing the 4 levels of traceability chain.}
+	\end{SCfigure}
+	
+	A length standard can consist of a edge gauges block of, more easily, using \textbf{line standard} which provide the reference lengths as the distance between two parallel lines on the surface of the object (so, as example, a simple ruler or calliper). The line standard is often used for calibrating the scales of optical vision system.
+	
+	\begin{SCfigure}[2][bht]
+		\centering \includegraphics[width=4cm]{ruler}
+		\caption{example of a line length standard.}
+	\end{SCfigure}
+	
+\subsection{Displacement sensors} 
+	The contact displacement sensor measure the linear position of an object by physically contacting its surface with a prove. An example of digital comparator of displacement is the \textbf{LVDT} (\textit{Linear Variable Differential Transformer}) transducer. In this case the displacement is related to the motion of a movable electromagnetic core that determines a change of mutual inductance between the primary and secondary coils that's then measured by a voltmeter.
+	
+	\begin{SCfigure}[2][bht]
+		\centering \includegraphics[width=4cm]{lvdt}
+		\caption{functional schematic of an LVDT displacement sensor.}
+	\end{SCfigure}
+	
+	Displacement can also be measured using \textbf{encoders} that determines a (relative or absolute) position in digital format by counting the number of optical/magnetic/inductive pulses. \\
+	Relative encoder are easier to implement and requires only two tracks to measure the displacement and it's direction, but every time it's necessary to restart from a known position. Considering instead an absolute encoder the minimum number of tracks to measure a length $l$ with a resolution $r$ is $\lceil \log_2 (l/2) \rceil $ (for example to measure a length of $l=1m$ with a resolution of $r=1\mu m$ the minimum number of tracks is 20); this measure relates also to the number of bits representing the measure.
+	
+	In general absolute encoders don't presents masks with a binary encoding, but they use the \textit{Gray code} (in order to avoid the problem of multiple wrong reads of the sensor while being near to the commutation stage) that assures only one change of bit for each step.
+	
+	\begin{SCfigure}[1][bht]
+		\centering \includegraphics[width=8cm]{greycode}
+		\caption{binary code vs Gray code masks for absolute encoders.}
+	\end{SCfigure}
+	
+	\paragraph{Non-contact displacement sensors} The previous explained measurement method for displacement require a contact between the system and the object to be probed, but it possible to create systems contact free using the following measurement principles:
+	\begin{itemize}
+		\item \textbf{light interferometry}: in this case the system  consists of a laser source that splitted by a beam into two retroreflectors (as shown in figure \ref{fig:meas:interferometer}).		
+		
+		\begin{SCfigure}[1][bht]
+			\centering \includegraphics[width=6cm]{las-sys}
+			\caption{schematic representation of a laser interferometer.} \label{fig:meas:interferometer}
+		\end{SCfigure}
+		 
+		 The intensity of the interference signal is function of the phase difference between the superimposed beams ($0^\circ$ for constructive interference, $180^\circ$ for the destructive one). The intensity of the interference signal repeats with displacements of the retroreflector equal to one half of the wavelength $\lambda$ of the light beam and, by interpolation of the phase within a fringe period, it's possible to achieve sub-nanometre resolutions. In general the resolution is great ($10nm$) with a range up to hundreds of meters (and so it has a huge dynamic range);
+		 
+		 \item \textbf{light intensity}: this system has an high resolution but a limited range  and uses fiber optics carrier to enlight the surface and measure the reflected light;
+		 \begin{figure}[bht]
+		 	\centering \includegraphics[width=7cm]{fibermeasure}
+		 	\caption{schematic representation of a light intensity measurement system.}
+		 \end{figure}
+	 
+	 	\item \textbf{trilateration}: in this case we use a line pixel array to detect the shift of the reflected light source.
+	 	
+	 	\begin{SCfigure}[1][bht]
+	 		\centering \includegraphics[width=5cm]{trilateral}
+	 		\caption{schematic representation of a trilateration measurement system.}
+	 	\end{SCfigure}		
+	\end{itemize}
+	
+\subsection{Form measurement}
+	\paragraph{Straightness and roundness} The \de{straightness} is measured as lateral deviation along a displacement; in this case the reference line can be computed by interpolation (by computing as example the least-square line). With an analyses of the surface we can define the parameters such the peak-ref deviation $STR_p$, the valley-ref deviation $STR_v$, the peak-valley deviation $STR_t = STR_p + STR_v$ and the RMS deviation $STR_q$.
+	
+	\begin{SCfigure}[2][bht]
+		\centering \includegraphics[width=6cm]{straightness}
+		\caption{measurement axis and straightness profile with main parameter of this kind of form measure.}
+	\end{SCfigure}
+	
+	Similarly we can define the same parameters for a circular surface determining so the \de{roundness} $RON$ of the piece.
+	
+	\textbf{Flatness} can be regarded as the straightness in two dimension (on a surface, not a axis), while \textbf{parallelism} defines a tolerance zone respect to a datum, rather than respect to the reference line.
+	
+	\begin{SCfigure}[2][bht]
+		\centering \includegraphics[width=8cm]{flat-par}
+		\caption{flatness and parallel zone tolerance for a piece.}
+	\end{SCfigure}
+	
+	In order to asses the flatness we can use an optical flat that use the patterns of the fringes due to light interferometry to determine the flatness of the surface.
+	
+	\begin{SCfigure}[2][bht]
+		\centering \includegraphics[width=3cm]{opt-flat}
+		\caption{example of an optical flat system to measure flatness.}
+	\end{SCfigure}
+	
+	\paragraph{Roughness} To determine the \de{surface roughness} of a surface we need to split it's topography (all wavelength) into surface texture (short wavelength) and  surface form (long wavelength associated to the baseline). In particular the roughness is a one dimensional texture measured along a single scan line.
+	
+	\begin{SCfigure}[2][bht]
+		\centering \includegraphics[width=5cm]{rough-top}
+		\caption{topology, form and texture surface for a piecea.}
+	\end{SCfigure}
+
+	Texture measure can be either be contact (stylus sliding orthogonally to the surface) or contact-less (optical analysis that's intrinsically bi-dimensional). In general non contact texture instruments provides a height map image of the surface that can be easily analysed and can convey a lot of information. In general non contact texture instruments have a limitation in the resolution $r$ (compared to the contact one) that depends on the numerical aperture $A_n = n \sin\alpha$ following the relation $r = k \lambda /A_n$ (where $k=0.61$ is the Raylight criterion,$\lambda$ is the light wavelength and $n$ is the refractive index of the optic).
+	
+	In general to compute the parameter $Ra$ associated to the \textbf{surface roughness} we consider the equation
+	\begin{equation}
+		Ra = \frac 1 L \int_0^L |z(x)| \, dx
+	\end{equation}
+	where $L$ is the reference length on which we compute the parameter and $z(x)$ represent the deviation of the surface from the centre line.
+	
+	\paragraph{Reversal principle} A simple way to separate error is to use the \de{reversal principle} that consist on a double measure reversing the measurement system.
+	
+	\begin{SCfigure}[2][bht]
+		\centering \includegraphics[width=7cm]{rev-princ}
+		\caption{application on where the reversal principle can be useful.}
+		\label{fig:meas:reversal}
+	\end{SCfigure}
+	
+	Let's consider the practical case shown in figure \ref{fig:meas:reversal} of the instrument shown that allows to compute the angle $\alpha$ of the inclined plane on which is placed by transducing the rotation in the displacement $l$. If the measurement system present an imperfection that translates to an addition of the angle $\beta$ to the measure, this offset error can be compensated using the reversal principle.\\
+	Knowing that the first measure gives a displacement $l_1 = \alpha + \beta$, by reversing the orientation of the instrument the output becomes $l_2 = \alpha - \beta$: this allows to calculate more precisely the value $\alpha$ and the error $\beta$ introduced by the system as
+	\[ \alpha = \frac{l_1 + l_2}{2} \qquad \ \qquad \beta = \frac{l_1-l_2}{2} \]
+	Once that the error $\beta$ is computed and known there's no need to perform this operation every time we want to do a measure.
+	
+	
+	
+	

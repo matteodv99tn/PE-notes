@@ -113,6 +113,129 @@
 	Knowing that the first measure gives a displacement $l_1 = \alpha + \beta$, by reversing the orientation of the instrument the output becomes $l_2 = \alpha - \beta$: this allows to calculate more precisely the value $\alpha$ and the error $\beta$ introduced by the system as
 	\[ \alpha = \frac{l_1 + l_2}{2} \qquad \ \qquad \beta = \frac{l_1-l_2}{2} \]
 	Once that the error $\beta$ is computed and known there's no need to perform this operation every time we want to do a measure.
+
+\section{Statistics and uncertainty}
+	The graphical and mathematical techniques that allow to describe the behaviour of a stochastic variable are called \textbf{descriptive statistics}. In this analysis it's important to define the \de{population} as the entire set (that can be both finite or infinite) of all possible observation and the \de{sample} as a random subset drawn from a population.  A sample can be extracted
+	\begin{itemize}
+		\item with re-insertion, used for the \textbf{simple random sampling}, where each extract element is returned to the population (and so a re-extraction might occur). This process is good when the number $n$ of samples is way less than the size $N$ of the population;
+		
+		\item without re-insertion, used for the \textbf{bulk sampling}, where each extracted element reduces the remaining population and so this process is suggested when $n\simeq N$.
+	\end{itemize}
+	
+	\paragraph{Frequency and probability} We define the \de{frequency} of a random variable as the number of times a given value is observed for a certain number of observation; from that we can define the \de{probability} as the ratio of the frequency respect the total number of observation. 
+	
+	When the random variable is discrete ($x\in \mathds I$) then both frequency and probability can be easily calculated, while when the variable is real evaluated ($x\in \mathds R$) we have to introduce the concept of \textbf{classes} (or bins), a set of contiguous intervals of known width (not necessary with the same width); with this definition we can define the probability as the ratio between the observation in a certain class over the whole number of observations; we can also define the \textbf{probability density} as the probability of a class divided by it's bin width. The number $n$ of bins can be computed considering the following binning formulas: 
+	\begin{equation}
+	\begin{aligned}
+		\textrm{Scott:}& \qquad n = 3.5 s_x N^{-1/3} \\ 
+		\textrm{Sturges:}& \qquad n = \big\lceil 1 + \log_2(N) \big\rceil
+	\end{aligned}
+	\end{equation}
+	where $s_x$ is the standard deviation (that will be described later) of the sample. 
+
+	In order to analyse frequencies/probabilities we can use graphical instruments like histograms in which the vertical axis can describe the frequency, the frequency density, the probability and the probability density.
+	
+	\begin{SCfigure}[1][bht]
+		\centering \includegraphics[width=5cm]{histo}
+		\caption{example of a histogram display the frequency of a real evaluated random variable.}
+	\end{SCfigure}
+
+\subsection{Estimators}
+	\paragraph{Central tendency estimators} The \de{central tendency estimators} are used to compute the \textit{central value} of a sample/population; the first main central tendency estimator is the \de{mean} operator that's usually written as $\mu$ for population and $\overline x$ for a sample $x$ and it's defined as
+	\begin{equation}
+		\mu = \sum_{i=1}^n x_i f(x_i) \qquad \qquad \qquad \qquad \overline x = \sum_{i=1}^n \frac{x_i}{n}
+	\end{equation}
+	where $x_i$ is the value associated to the $i$-th observation (in the case of the sample mean, but equally it relates to the population). Another central estimator is the \textbf{median} defined as
+	\begin{equation}
+		\textrm{Med}(x) = \begin{cases}
+			\dfrac{x\left(\frac n2\right) + x\left(\frac{n+1}{2}\right) }{2} \qquad & \textrm{when $n$ is even} \\
+			x\left(\frac{n+1}{2}\right) \qquad & \textrm{when $n$ is odd}
+		\end{cases}
+	\end{equation} 
+	
+	As last operator we define the \textbf{mode} as the most frequent value.
+	
+	\paragraph{Dispersion estimators} \de{Dispersion estimators} can be used to compute \textit{how away} is spread a random variable respect to the central value. The first operator is the \de{range} that determines the width of the bin associated to a value $x_i$:
+	\begin{equation}
+		\textrm{rng}(x_i) = \max(x_i) - \min(x_i)
+	\end{equation}
+	
+	A more important operator is the \de{variance} ($\sigma^2$ for population, $s^2$ for sample) that can be calculated by firstly determining the mean of the sample:
+	\begin{equation}
+		\sigma^2 = \frac{\sum_{i=1}^n (x_i-\mu)^2 }{n} \qquad \qquad \qquad \qquad s^2 = \frac{\sum_{i=1}^n (x_i-\overline x)^2 }{n-1}
+	\end{equation}
+	The \de{standard deviation} is simply the square root of the variance.
+	
+\subsection{Probability distributions}
+	Using cumulative histograms of a population it's possible to calculate the probability of finding a value in a given range $[a,b]$ as
+	\[ P(a<x<b) = f_{cd,l}(b)-f_{cd,l}(a) \]
+	where so $f_{cd,l}(\cdot)$ is the \textbf{cumulative probability density function}. The problem of this relation is that the population is rarely known and the \textit{shape} (in statistical expression, the \textbf{distribution}) of the histogram can be different for different variables.
+	
+	Defining reference distributions in mathematical terms allows to calculate probabilities without knowing the entire population. Reference distribution are identified for both discrete and continuous random variables. In this section we will discuss only the real evaluated probability distribution because they relate better to measuring systems.
+	
+	\paragraph{Continuous distribution} Given a continuous random variable $x\in\mathds R$, knowing it's \de{probability density function} PDF $f_{pd}(x)$ we can compute the probability of having a value in the range $[a,b]$ as
+	\begin{equation}
+		p(a<x<b) = \int_a^b f_{pd}(x)\, dx
+	\end{equation}
+	Using cumulative distributions we can determine the \de{cumulative density function} CDF both lower tail $f_{cd,l}$ and upper tail $f_{cd,u}$ as
+	\begin{equation}
+	\begin{aligned}
+		f_{cd,l}(x) & = \int_{-\infty}^x f_{pd}(\xi)\, d\xi \\
+		f_{cd,y}(x) & = \int_x^\infty f_{pd}(\xi)\, d\xi = 1 - f_{cd,l}(x) \\
+		\Rightarrow \qquad p(a<x<b) &= f_{cd,l}(b)-f_{cd,l}(a)
+	\end{aligned}
+	\end{equation}
+	From this last equation we can see that the probability of having a precise value $x_0\in x$ in a real  evaluated random variable is always zero ($P(x=x_0) = 0$).
+	
+	\paragraph{Uniform distribution} The simplest continuous distribution is the \de{uniform} one that's characterized by just 2 parameters, the two bound $a$ and $b$ of the distribution. We mathematically describe a random variable $y$ as uniformly distributed in the interval $[a,b]$ by writing
+	\[ y \backsim \mathcal U(a,b) \]
+	where
+	\begin{equation}
+		f_{pd}(y) = \begin{cases}
+			\dfrac{1}{b-a} \qquad& a \leq y \leq b \\0 & \textrm{otherwise}
+		\end{cases}
+	\end{equation}
+	
+	\paragraph{Normal distribution} The \de{normal distribution} is one of the most used relations and it's characterized by a mean value $\mu$ and a variance $\sigma^2$. We can define the normal distribution as
+	\begin{equation}
+	\begin{aligned}
+		y &\backsim \mathcal N(\mu,\sigma^2) \\
+		f_{pd}(y) &= \frac 1 {\sigma \sqrt{2\pi}} e ^{-\frac 1 2 \left(\frac{y-\mu}{\sigma}\right)^2}
+	\end{aligned}
+	\end{equation}
+	We can observe that the distribution computed as $\frac{y-\mu}{\sigma}$ behaves as a normal distribution with zero mean and unit variance:
+	\[ \frac{y-\mu}{\sigma} \backsim \mathcal N(0,1) \]
+	
+	\paragraph{Chi-square distribution} The \de{chi-square} distribution of order $k$ is a sum of $k$ 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

@@ -173,7 +173,7 @@
 	
 	Defining reference distributions in mathematical terms allows to calculate probabilities without knowing the entire population. Reference distribution are identified for both discrete and continuous random variables. In this section we will discuss only the real evaluated probability distribution because they relate better to measuring systems.
 	
-	\paragraph{Continuous distribution} Given a continuous random variable $x\in\mathds R$, knowing it's \de{probability density function} PDF $f_{pd}(x)$ we can compute the probability of having a value in the range $[a,b]$ as
+	\paragraph{Continuous distributions} Given a continuous random variable $x\in\mathds R$, knowing it's \de{probability density function} PDF $f_{pd}(x)$ we can compute the probability of having a value in the range $[a,b]$ as
 	\begin{equation}
 		p(a<x<b) = \int_a^b f_{pd}(x)\, dx
 	\end{equation}
@@ -206,25 +206,164 @@
 	We can observe that the distribution computed as $\frac{y-\mu}{\sigma}$ behaves as a normal distribution with zero mean and unit variance:
 	\[ \frac{y-\mu}{\sigma} \backsim \mathcal N(0,1) \]
 	
-	\paragraph{Chi-square distribution} The \de{chi-square} distribution of order $k$ is a sum of $k$ 
+	\paragraph{Chi-square distribution} The \de{chi-square} distribution of order $k$ is a sum of $k$ normal distributed random variables squared, and so
+	\[ y \backsim \mathcal X_k^2 \qquad y = z_1^2+\dots+z_k^2 \qquad \textrm{where } z_i \backsim \mathcal N(0,1) \]
+	This distribution presents a mean value $\mu = k$ and a variance $\sigma^2  = 2k$ with a probability density function depending on the Euler gamma function:
+	\[ f_{pd}(y) = \frac{1}{2^{k/2} \Gamma(k/2) } y^{\frac k 2 - 1} e^{-y/2} \]
+	
+	\paragraph{Student's T distribution} A random variables is distributed as a \de{student's T} of order $k$ when
+	\[ y\backsim t_k \qquad y = \frac{z}{\sqrt{x/k}} \qquad \textrm{where }  z\backsim \mathcal N(0,1), x \backsim \mathcal X_k^2 \]
+	In this case the mean value is null ($\mu = 0 $) and the variance is determined by the function $\sigma^2= \frac{k}{k-2}$; in particular the probability density function of this distribution is
+	\[ f_{pd} (y) = \frac{\Gamma \left( \frac{k-1}2 \right)}{\sqrt{k\pi} \Gamma(k/2)} \frac{1}{\big[ (y^2/k) + 1  \big]^{(k+1)/2}} \]
+	
+	\begin{figure}[bhtp]
+		\centering
+		\begin{subfigure}{0.48 \linewidth}
+			\centering \includegraphics[width=5cm]{pdf-uniform}
+			\caption{}
+		\end{subfigure}
+		\begin{subfigure}{0.48 \linewidth}
+			\centering \includegraphics[width=5cm]{pdf-normal}
+			\caption{}
+		\end{subfigure}
+		\begin{subfigure}{0.48 \linewidth}
+			\centering \includegraphics[width=5cm]{pdf-chi}
+			\caption{}
+		\end{subfigure}
+		\begin{subfigure}{0.48 \linewidth}
+			\centering \includegraphics[width=5cm]{pdf-stud}
+			\caption{}
+		\end{subfigure}
+	
+		\caption{probability density functions of the main distribution: (a) uniform, (b) normal, (c) chi square and (d) student's T.}
+	\end{figure}
+
+	\paragraph{Distribution of sample mean} Given a random variable $x_i \backsim N(\mu,\sigma^2)$ normally distributed with mean value $\mu$ and variance $\sigma^2$, we can see that also the mean value $\overline x$ of a sample with $n$ elements randomly taken by the population is still a random variable that's still normally distributed: $\overline x \backsim \mathcal N(\mu_{\overline x}, \sigma_{\overline x}^2)$. The mean value and the variance of this distribution can be computed considering the properties of the operators \textit{expected values} $E$ and the variance one $V$:
+	\begin{align*}
+		E(\overline x) & = E\left( \frac{x_1+x_2+\dots+x_n}{n}\right) = \frac 1 n\Big( E(x_1) + E(x_2) + \dots + E(x_n) \Big) \\
+		& = \mu  \\
+		V(\overline x) & = V\left( \frac{x_1+x_2+\dots + x_n}{n} \right) = \frac 1 {n^2} \Big( V(x_1) + V(x_2) + \dots + V(x_m) \Big) \\
+		& = \frac n {n^2} V(x) = \frac{\sigma_x^2}{n}
+	\end{align*}
+	
+	\paragraph{Central limit theorem} If $x_1,\dots,x_n$ are $n$ independent random variables equally distributed with finite expected value $E(x_i) = \mu$ and variance $V(x_i) = \sigma^2$, than the defining the random variable $y = x_1+\dots+x_n$ we can see that
+	\begin{equation}
+		z_n = \frac{y-n\mu}{\sqrt{n\sigma^2}} \backsim \mathcal N(0,1)
+	\end{equation}
+	and so the distribution $z_n$ is normally distributed.
+	
+	This theorem stats that the limit of sum distributions tends to be normal; in measurement we can in fact consider the action of a high number of random factors (measure noises, mechanical/electrical error, environmental noises...) that, summed up, tends to provide a normal distribution.
+	
+\section{Inferential statistics}
+	The \de{inferential statistics} is the process for which characteristic of the population are induced from the observation of a randomly extracted sample of the population itself.
+	
+	Fundamental part of inferential statistics are the so called \de{statistical tests} that allows us to check if a sample is compatible (or not) with a given reference population (respect to value, variance, distributions...).\\
+	Statistical tests serves to decide which of two hypothesis is more likely to be wrong,  and in particular we define
+	\begin{itemize}
+		\item $H_0$ as the \textbf{null hypothesis} that's the weakest (typically it says that an observation is not significant and relates to the \textit{correctness} of the statement);
+		\item $H_1$ as the \textbf{alternative hypothesis} that's the strong one (related to the fact that the sample is usually not compatible with the statement formulated).
+	\end{itemize}
+	
+	Hypothesis are collected in the so called \de{confusion matrix} (table \ref{tab:meas:confmatrix}) that relates the truthiness of $H_0$ (null hypothesis) with the decision of the outcome  (accept or reject the null hypothesis).
+	
+	\begin{SCtable}[0.8][bht]
+		\begin{tabular}{c|c c}
+			$H_0$ & True & False \\ \hline 
+			Accepted & ok & missed alarm \\
+			Rejected & false alarm  & ok
+		\end{tabular}
+		\caption{confusion matrix.} \label{tab:meas:confmatrix}
+	\end{SCtable}
+		
+	Let's consider a sample $x_i$ of $n$ elements: we can \textit{standardize} the sample mean $\overline x$ by subtracting the expected value and dividing by the standard deviation
+	\begin{equation}
+		t_0 = \frac{|\overline x - \mu_0|}{s/\sqrt n} \backsim t_n
+	\end{equation}
+	The result $t_0$ of this operation is distributed as a student's T with $n$ degrees of freedom and represent the so called \de{test statistic}.
+	
+	This value is intuitively larger when the sample mean is far from the expected value (relatively to it's standard deviation); the smaller the probability of a value larger than $t_0$ on the T distribution, the stronger is the hypothesis that the sample with mean $\overline x$ and variance $s^2$ \textbf{does not} come form a population with expected value $\mu_0$. We refer to the probability of having a value larger than $t_0$ as \de{$p$-value} (that's related to the probability of a false alarm error in the confusion matrix, also referred as type I error).
+		
+	\begin{example}{}
+		If we consider a sample with $n = 5$ samples and a test statistic
+		\[ t_0 = \frac{|\overline x- \mu_0|}{s/\sqrt 5} = 2 \]
+		then the $p$-value of the sample can be computed as
+		\[  p\textrm{-value} = 1 - cdf(t_0) = 0.046 = 4.6\% \]
+		and so this means that the error probability if we decide that the difference between $\overline x$ and $\mu_0$ is significative is equal to $4.6\%$.
+	\end{example}
+	
+	We can note that if we know the variance of the population, the test statistic is distributed as a standard normal and the larger $n$ is, the more the distribution $t_k$ is similar to a normal $\mathcal N(0,1)$, hence for $n>50$ we can consider the test statistic as
+	\[ z_0 = \frac{|\overline x-\mu_0|}{\sigma/\sqrt n} \backsim \mathcal N(0,1) \qquad \qquad \textrm{for } n >50 \] 
+	
+	\paragraph{Normality checks} All inferential tests are based on the assumption of normality that can usually be expected considering the central limit theorem, but it has to be checked by using different techniques like the normality plot, the quantile-quantile plot, various distributions and the chi-square test.
+			
+\subsection{Chi-square test}
+	
+	The \de{chi-square test} is a statistical test (hence non subjective) that fixed a predefined error probability for the type I error (false alarm) and it's base on the following hypothesis:
+	\begin{itemize}
+		\item $H_0$: the sample is normally distributed;
+		\item $H_1$: the sample is not normally distributed.
+	\end{itemize}
+	
+	To perform this kind of test the the operation to perform are the following:
+	\begin{enumerate}
+		\item collect sample elements in $k$ bins that are large enough to have at leat $4,5$ observations;
+		\item count the observation $O_i$ ($i=1,\dots,k$) in each bin;
+		\item calculate the number of expected observation $E_i$ in each bin considering the normal distribution $\mathcal N(0,1)$ (or in general computing the expected value considering  a reference distribution);
+		\item calculate the test statistic as
+		\begin{equation}
+			X_0^2  = \sum_{i=1}^k \frac{\big(O_i-E_i\big)^2}{E_i} \backsim \mathcal X_{k-p-1}^2
+		\end{equation}
+	\end{enumerate}
+	The test statistic is distributed as a chi-square with $k-1-p$ degrees (where $p$ is the number of parameters in the reference distribution, and so for the normal one is $p=2$)
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	\vspace{3cm}
+	\textbf{ LEZIONE DEL 25 NOVEMBRE, slide 97 }
 	
 	
+\subsection{Contingency test}
+	\de{Contingency tests} are performed on $n$ elements of population and are used to verify if the samples in statistically independent respect to two classification criteria.
+	
+	In order to do so we have to create a cross-table where in the rows we put one criteria while on the columns we put the other one; the table is then filled with the cross correlation observations $O_{ij}$. Computing the \textbf{margin totals}
+	\[ \hat u_i = \frac 1 n \sum_{j=1}^{c} O_{ij} \qquad \qquad \qquad \hat v_i = \frac 1 n \sum_{i=1}^{r} O_{ij} \]	
+	if the two criteria are independent it means that the same values are expected for each criterion, and so the expected value on each cell should be
+	\[ E_{ij} = n \hat u_i \hat v_i = \frac 1 n  \sum_{j=1}^{c} O_{ij} \sum_{i=1}^{r} \]
+	
+	We can now perform a chi-square test considering the following distribution:
+	\[ X_0^2 = \sum_{j=1}^{c} \sum_{i=1}^{r} \frac{\big(O_{ij}-E_{ij}\big)^2}{E_{ij}} \]
+	The number of freedom $\nu$ of this test is $(r-1)(c-1)$ and so by computing the p-value $f_{cd,u,\nu}(X_0^2)$ we can say that the criterion are statistically dependent if the p-value is \textit{low}.
 	
 	
+\subsection{Outliers}
+	\de{Outliers} are observation that are not compatible with the distribution of the rest of the sample that may result from error in conducting the measurement or recording the measured value. This is a rare event associated with a different distribution from that typical of the measurements process correctly performed; it is not expected to be more than one outlier per sample (and we cannot extract more than one outlier in order to not alter the original extracted sample). Outliers must be eliminated from the samples and so by doing this we reduce the variance with respect to the expected value; outliers have a stronger effect on smaller samples.
 	
+	To detect outliers we can use two methods:
+	\begin{itemize}
+		\item \textbf{Chauvenet's criterion}: given a normally distributed sample $\langle x_1,\dots,x_n\rangle$, given the mean value $\overline x$ and standard variance $s_x$ we have to fined the maximum absolute residual defined as
+		\[ r_ 0 = \max_{i=1,\dots,n} \left( \frac{|x_i-\overline x|}{s_x} \right) \]
+		At this point the probability of having a value larger then $r_0$ (consider the normal distribution) is that
+		\[ P_r = P(x>r_0) = \int_x^\infty f_x(\xi)\, d\xi \]
+		Over $n$ observation the numver of expected observation with residual larger than $r_0$ is $n P_r$ and if this value is less than $0.5$m then the observation with largest residual is eliminated.
+		
+		\item \textbf{Grubb's test}:
+		
+		\textbf{RISCRIVERE}
+	\end{itemize}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+\section{Regression analyses}
 	
 	
 	

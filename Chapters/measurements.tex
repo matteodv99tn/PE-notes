@@ -181,7 +181,7 @@
 	\begin{equation}
 	\begin{aligned}
 		f_{cd,l}(x) & = \int_{-\infty}^x f_{pd}(\xi)\, d\xi \\
-		f_{cd,y}(x) & = \int_x^\infty f_{pd}(\xi)\, d\xi = 1 - f_{cd,l}(x) \\
+		f_{cd,u}(x) & = \int_x^\infty f_{pd}(\xi)\, d\xi = 1 - f_{cd,l}(x) \\
 		\Rightarrow \qquad p(a<x<b) &= f_{cd,l}(b)-f_{cd,l}(a)
 	\end{aligned}
 	\end{equation}
@@ -276,19 +276,29 @@
 	\end{SCtable}
 		
 	Let's consider a sample $x_i$ of $n$ elements: we can \textit{standardize} the sample mean $\overline x$ by subtracting the expected value and dividing by the standard deviation
-	\begin{equation}
-		t_0 = \frac{|\overline x - \mu_0|}{s/\sqrt n} \backsim t_n
+	\begin{equation} \label{eq:studenttest}
+		t_0 = \frac{|\overline x - \mu_0|}{s/\sqrt n} \backsim t_{n-1}
 	\end{equation}
-	The result $t_0$ of this operation is distributed as a student's T with $n$ degrees of freedom and represent the so called \de{test statistic}.
+	The result $t_0$ of this operation is distributed as a student's T with $n-1$ degrees of freedom and represent the so called \de{test statistic}.
 	
-	This value is intuitively larger when the sample mean is far from the expected value (relatively to it's standard deviation); the smaller the probability of a value larger than $t_0$ on the T distribution, the stronger is the hypothesis that the sample with mean $\overline x$ and variance $s^2$ \textbf{does not} come form a population with expected value $\mu_0$. We refer to the probability of having a value larger than $t_0$ as \de{$p$-value} (that's related to the probability of a false alarm error in the confusion matrix, also referred as type I error).
+	This value is intuitively larger when the sample mean is far from the expected value (relatively to it's standard deviation); the smaller the probability of a value larger than $t_0$ on the T distribution, the stronger is the hypothesis that the sample with mean $\overline x$ and variance $s^2$ \textbf{does not} come form a population with expected value $\mu_0$. We refer to the probability of having a value larger than $t_0$ as \de{$p$-value} (that's related to the probability of a false alarm error in the confusion matrix, also referred as type I error). The lower this value is, the less error we commit on assuming the null hypothesis $H_0$ \textbf{is not verified} and so $H_1$ is happening.
 		
-	\begin{example}{}
-		If we consider a sample with $n = 5$ samples and a test statistic
-		\[ t_0 = \frac{|\overline x- \mu_0|}{s/\sqrt 5} = 2 \]
-		then the $p$-value of the sample can be computed as
-		\[  p\textrm{-value} = 1 - cdf(t_0) = 0.046 = 4.6\% \]
-		and so this means that the error probability if we decide that the difference between $\overline x$ and $\mu_0$ is significative is equal to $4.6\%$.
+	\begin{example}{normally distributed sample}
+		Let's consider the following sample of $n=8$ elements extracted from a population normally distributed with mean $\mu = 5$ and standard deviation $\sigma = 1$:
+		\[ 4.35 \qquad 6.20 \qquad 4.24 \qquad 3.89 \qquad 4.15 \qquad 4.43 \qquad 4.44 \qquad 5.2 \]
+		If we want to check if this sample is uniformly distributed or not, the first thing to do is to compute it's mean $\overline x$ and standard deviation $s$:
+		\[ \overline x = \sum_{i=1}^n = \frac{x_i}{n} = 4.61 \qquad \qquad s = \sqrt{ \frac{\sum_{i=1}^n (x_i-\overline x)^2 }{n-1}} = 0.74  \]
+		In order to find out if this sample randomly extracted from the population it's necessary to compute the test static $t_0$ of the sample as seen in equation \ref{eq:studenttest}:
+		\[ t_0 = \frac{|\overline x - \mu|}{s/\sqrt n} = \frac{|4.61-5|}{0.74/\sqrt{8}} = 1.47 \]
+		Noticing that this variable is distributed as a Student T with $n-1=7$ degrees of freedom, the double tail p-value of the test statistic can be computed using the cdf of the distribution:
+		\[ \pval = 2 \big(1-f_{cd,l}(t_0)\big) = 18\% \]
+		
+		$18\%$ so represent the error that we commit on considering the sample as not coming from the initial population that have mean $\mu = 5$; this value is quite \textit{high} (respect to the canonical $5\%$) and so we can accept the null hypothesis (or better, we can reject the strong hypothesis) with the final result that:
+		\[ H_0 : \textrm{the sample belong to the initial population ($\mu = 5$)} \]
+		
+		If we instead would have considered as null hypothesis that the sample has been extracted by a population with a different mean $\mu = 5.5$, the test statistic would have been $t_0 = 3.37$ associated to a $\pval = 1.2\%$, and so we can confidently reject the null hypothesis and consider the strong one:
+		\[ H_1 : \textrm{the sample doesn't belong to a population having $\mu = 5.5$} \]
+		
 	\end{example}
 	
 	We can note that if we know the variance of the population, the test statistic is distributed as a standard normal and the larger $n$ is, the more the distribution $t_k$ is similar to a normal $\mathcal N(0,1)$, hence for $n>50$ we can consider the test statistic as
@@ -298,15 +308,15 @@
 			
 \subsection{Chi-square test}
 	
-	The \de{chi-square test} is a statistical test (hence non subjective) that fixed a predefined error probability for the type I error (false alarm) and it's base on the following hypothesis:
+	The \de{chi-square test} is a statistical test (hence non subjective) that fixed a predefined error probability for the type I error (false alarm) and it's based on the following hypothesis for the statistical test:
 	\begin{itemize}
-		\item $H_0$: the sample is normally distributed;
+		\item $H_0$: the sample is normally distributed (or is distributed respect to another known distribution);
 		\item $H_1$: the sample is not normally distributed.
 	\end{itemize}
 	
 	To perform this kind of test the the operation to perform are the following:
 	\begin{enumerate}
-		\item collect sample elements in $k$ bins that are large enough to have at leat $4,5$ observations;
+		\item collect sample elements in $k$ bins that are large enough to have at leat $4,5$ observations (note that the bins can have different ranges);
 		\item count the observation $O_i$ ($i=1,\dots,k$) in each bin;
 		\item calculate the number of expected observation $E_i$ in each bin considering the normal distribution $\mathcal N(0,1)$ (or in general computing the expected value considering  a reference distribution);
 		\item calculate the test statistic as
@@ -314,25 +324,14 @@
 			X_0^2  = \sum_{i=1}^k \frac{\big(O_i-E_i\big)^2}{E_i} \backsim \mathcal X_{k-p-1}^2
 		\end{equation}
 	\end{enumerate}
-	The test statistic is distributed as a chi-square with $k-1-p$ degrees (where $p$ is the number of parameters in the reference distribution, and so for the normal one is $p=2$)
+	The test statistic is distributed as a chi-square with $k-1-p$ degrees of freedom (where $p$ is the number of parameters in the reference distribution, and so for the normal one is $p=2$); the $p$-value of this test (associated to the probability of having a type I error) is computed as
+	\begin{equation}
+		\pval = \min \Big\{ f_{cd,l}\big(X_0^2\big), f_{cd,u}\big(X_0^2\big) \Big\}
+	\end{equation}
 	
+	This test can also be performed while using a confidence interval: assigned a maximum error probability $\alpha$ of having a false alarm, then the related quantiles to have such probability are $p_1 = \alpha/2$ and $p_2 = 1-\alpha/2$ (that so determines the the coefficients $\mathcal X^2_{p_1}$, $\mathcal X^2_{p_2}$); whenever $\mathcal X^2_{p_1} < X_0^2 < \mathcal X^2_{p_2}$ there is no statistical evidence that the sample is not normally distributed.
 
-
-
-
-
-
-
-
-
-
-
-
-
-	
-	\vspace{3cm}
-	\textbf{ LEZIONE DEL 25 NOVEMBRE, slide 97 }
-	
+	This statistical test can so be performed to check whenever if a sample is compatible with a normal distribution or with a different theoretical distribution, but can also related the quantiles of two different samples (in order to compare and verify them) with unknown distribution a priori. For this reason this test is also called \de{Goodness-of-Fit Test} (GoF). 	
 	
 \subsection{Contingency test}
 	\de{Contingency tests} are performed on $n$ elements of population and are used to verify if the samples in statistically independent respect to two classification criteria.
@@ -340,11 +339,47 @@
 	In order to do so we have to create a cross-table where in the rows we put one criteria while on the columns we put the other one; the table is then filled with the cross correlation observations $O_{ij}$. Computing the \textbf{margin totals}
 	\[ \hat u_i = \frac 1 n \sum_{j=1}^{c} O_{ij} \qquad \qquad \qquad \hat v_i = \frac 1 n \sum_{i=1}^{r} O_{ij} \]	
 	if the two criteria are independent it means that the same values are expected for each criterion, and so the expected value on each cell should be
-	\[ E_{ij} = n \hat u_i \hat v_i = \frac 1 n  \sum_{j=1}^{c} O_{ij} \sum_{i=1}^{r} \]
+	\[ E_{ij} = n \hat u_i \hat v_i = \frac 1 n  \sum_{j=1}^{c} \sum_{i=1}^{r} O_{ij}  \]
 	
 	We can now perform a chi-square test considering the following distribution:
-	\[ X_0^2 = \sum_{j=1}^{c} \sum_{i=1}^{r} \frac{\big(O_{ij}-E_{ij}\big)^2}{E_{ij}} \]
-	The number of freedom $\nu$ of this test is $(r-1)(c-1)$ and so by computing the p-value $f_{cd,u,\nu}(X_0^2)$ we can say that the criterion are statistically dependent if the p-value is \textit{low}.
+	\begin{equation}
+		 X_0^2 = \sum_{j=1}^{c} \sum_{i=1}^{r} \frac{\big(O_{ij}-E_{ij}\big)^2}{E_{ij}} \backsim \mathcal X^2_\nu
+	\end{equation}
+	on where the number of degrees of freedom $\nu$ of this test is $(r-1)(c-1)$. With that said we can compute the $p$-value of the test statistic as $f_{cd,u,\nu}(X_0^2) = 1- f_{cd,l,\nu}(X_0^2)$; as always the $p$-value refers to the probability of having a type I error, and so if the probability is \textit{low} (in general below a certain threshold) we can confidently accept the strong hypothesis (rejecting the null one), stating so that the two criteria are statistically independent.
+	                
+	\begin{example}{: contingency test}
+		Let's assume the case on where we want to find out is the insurance plans chosen by $500$ workers in a factory depends on their job (that can be salary of hourly); this check can be performed with a contingency test and requires the following table for the actual observation $O_{ij}$:
+		               
+		\begin{center} 
+		\begin{tabular}{ c | c c c | c }
+			& \multicolumn{3}{c|}{insurance plan } \\
+			job & plan 1 & plan 2 & plan 3 & total \\ \hline
+			salary & 160 & 140 & 40 & 340 \\
+			hourly & 40 & 60 & 60 & 160 \\ \hline 
+			total & 200 & 200 & 100 & 500
+		\end{tabular}
+		\end{center}
+		
+		In order to perform the contingency test we need to compute the margin total that for the rows are $\hat u_1 = 340/500 = 0.68$, $\hat u_2 = 160/500 = 0.32$ while for the columns are $\hat v_1 = \hat v_2  = 200 / 500 = 0.4$ and $\hat v_3 = 100/500 = 0.2$. With that said we can compute the table containing the expected observation $E_{ij} = n \hat u_i \hat v_j$ in case of the statistically dependent criteria:
+		
+		\begin{center} 
+			\begin{tabular}{ c | c c c | c }
+				& \multicolumn{3}{c|}{insurance plan } \\
+				job & plan 1 & plan 2 & plan 3 & total \\ \hline
+				salary & 136 & 136 & 68 & 340 \\
+				hourly & 64 & 64 & 32 & 160 \\ \hline 
+				total & 200 & 200 & 100 & 500
+			\end{tabular}
+		\end{center}	
+		
+		At this point we can compute the test statistic as
+		\[ X_0 = \sum_{i=1}^2 \sum_{j=1}^3 \frac{\big(O_{ij}-E_{ij}\big)^2}{E_{ij}} = 49.63 \backsim \mathcal X^2_2 \]
+		where the degrees of freedom $\nu$ of the chi-square distribution have been calculated as $(r-1)(c-1) = (2-1)(3-1) = 2$. Using so the cumulative density function of the chi square test we can compute the $p$-value as
+		\[ \pval = f_{cd,u,\nu}(49.63) = 1 - f_{cd,l,\nu}(49.63) = 1.67 \cdot 10^{-11} \]
+		and so we almost have $0\%$ error probability on stating that the two criteria are not statistically dependent (rejecting so the null hypothesis of having statistically dependent criteria).
+		
+		
+	\end{example}
 	
 	
 \subsection{Outliers}
@@ -356,26 +391,80 @@
 		\[ r_ 0 = \max_{i=1,\dots,n} \left( \frac{|x_i-\overline x|}{s_x} \right) \]
 		At this point the probability of having a value larger then $r_0$ (consider the normal distribution) is that
 		\[ P_r = P(x>r_0) = \int_x^\infty f_x(\xi)\, d\xi \]
-		Over $n$ observation the numver of expected observation with residual larger than $r_0$ is $n P_r$ and if this value is less than $0.5$m then the observation with largest residual is eliminated.
+		using the cumulative distribution function of a standard normal. Over $n$ observation the number of expected observation with residual larger than $r_0$ is $n P_r$ and if this value is less than $0.5$ then the observation with largest residual is eliminated.
 		
-		\item \textbf{Grubb's test}:
+		\item \textbf{Grubb's test}: this method is based on a statistical test based on the following test statistic:
+		\[ s_0 = \max_{i=1,\dots,n} \left( \frac{|x_i-\overline x|}{s_x} \right) \]
+		Considering $t_{\alpha,k}$ as the $\alpha$-quantile of a Student's T with $k$ degrees of freedom , then if the inequality
+		\[ s_0 > \frac{n-1}{n} \sqrt{\frac{t^2_{\alpha/(2n),n-2}}{n-2+ t^2_{\alpha/(2n), n-2}}} \]
+		is verified, then the observation corresponding to $s_0$ is removed from the sample.
 		
-		\textbf{RISCRIVERE}
 	\end{itemize}
+	In both cases the procedure can be performed only once in order to not alter the initial sample.
 	
 \section{Regression analyses}
 	
+	The goal of the regression analysis is to identify the parameters that better adapt a model to a set of observations; the \de{model} is of the type $y = f(x)$ where $y$ is the \textbf{response} (or yield) and $x$ is the \textbf{predictor}.
+	
+	\begin{SCfigure}[2][bht]
+		\centering
+		\includegraphics[width=7cm]{regression}
+		\caption{example of regression of a quadratic model of type $a x^2 + bx + c$ (where the parameters that needed to be defined are $a,b,c$) on the data shown.}
+	\end{SCfigure}
+	
+	Model can be linear or non-linear (depending on the coefficient that can be changed in order to fit the datas) and mono or multi-dimensional (increasing so the complexity). We define with $n$ the \textbf{rank} of the model as the number of predictors $x_1,\dots, x_n$.
+	
+	\paragraph{Least squares regression} A way to perform the regression of some datas is by using the \de{leaast square regression} method that's based on the minimization of the performance index $\Phi$ that's the average square residual of the sample $\big\langle x_1,\dots, x_N\big\rangle$:
+	\[ \Phi\big(c_1,\dots, c_n\big) = \sum_{i=1}^N \varepsilon_i^2 \]
+	where $\varepsilon_i = y_i - f\big(c_1,\dots, c_n, x_i\big)$.
+	
+	\paragraph{Matrix calculus} Regression of linear models (in the coefficients) can also be performed using matrix calculus notation; considering, as example, the case of a quadratic model in the form $y = ax^2 + bx + c$, we can relate the input with the output as
+	\[ \underbrace{\begin{bmatrix}
+			x_1^2 & x_1 & 1 \\
+			x_2^2 & x_2 & 1 \\
+			\vdots & \vdots & \vdots \\
+			x_N^2 & x_N & 1 
+	\end{bmatrix} }_A \begin{pmatrix}
+		a\\b\\c
+	\end{pmatrix} = \begin{pmatrix}
+		y_1 \\ y_2 \\ \vdots \\ y_N
+	\end{pmatrix}\]
 	
 	
+\subsection{Prediction and confidence intervals}
+	The regression model shall also provide information regarding:
+	\begin{itemize}
+		\item the \de{prediction interval}, and so the \textit{range} with a given probability (usually $95\%$ or higher) on which the model will fall with a certain \textit{correctness};
+		
+		\item the \de{confidence interval}, associated to the \textit{range} on which future observation will fall with a given probability; for the same probability, this interval is wider than the prediction one. 
+	\end{itemize}
+	\begin{SCfigure}[2][bht]
+		\centering
+		\includegraphics[width=7cm]{intervals}
+		\caption{prediction and confidence interval for linearly fitted data.}
+	\end{SCfigure}
 	
+\subsection{Under and over-fitting}
 	
+	\de{Under-fitting} occurs every time the model used to fit some data present \textit{lower number} of parameters that doesn't allow to \textit{correctly} describe the phenomena of interest (the chosen model \textit{is not curved enough}), as in case of figure \ref{fig:meas:underfit}. In this case when plotting the graph of the residuals it's possible to note some patters, stressing out that the model wasn't allowed to perfectly fit the data.
 	
+	\begin{figure}[bht]
+		\centering
+		\begin{subfigure}{0.48\linewidth}
+			\centering 
+			\includegraphics[width=6cm]{of-1} \caption{}
+		\end{subfigure}
+		\begin{subfigure}{0.48\linewidth}
+			\centering 
+			\includegraphics[width=6cm]{of-2} \caption{}
+		\end{subfigure}
+		\caption{example of linear fit of "quadratic distributed" data (a) and related residuals plot (b).} \label{fig:meas:underfit}
+	\end{figure}
 	
+	Completely different is the case of \de{over-fitting}, where the model used for the data fit is \textit{more curve than required}, as in figure \ref{fig:meas:overfit}. In this case, looking at the residual plot gives no idea on the type of error (in fact the residuals will look randomly distributed). The only way to find out this problem is to fit the model only on the \textit{inner} bound of the sample: if out of this region the confidence/prediction interval diverges quickly, then this means that the chosen model over-fits the data.
 	
-	
-	
-	
-	
-	
-	
-	
+	\begin{SCfigure}[2][bht]
+		\centering
+		\includegraphics[width=6cm]{of-3}
+		\caption{example of "quadratic distributed" data fitted with a grade 9 polynomial. In this case the fit is made only with values in the domain $[1,9]$.} \label{fig:meas:overfit}
+	\end{SCfigure}

@@ -103,7 +103,7 @@
 		\item INVAR (Iron, $36\%$ nickel alloy): similar to inox steels but with lower thermal expansion coefficient ($10$ times smaller).
 	\end{itemize}
 	
-	
+	Polymers and composites can also be used due to their low costs and the ability of produce complex shapes. \textbf{AGGIUNGERE}
 	
 	
 	
@@ -121,3 +121,55 @@
 
 
 \section{Isolation}
+	
+	The performance of a precision machine depends on the \textbf{attenuation} of the \textbf{environmental disturbances} acting upon it; this attenuation is performed by \textbf{isolators} (like the simple example in figure \ref{fig:dist:isolator}) which have to be designed according to the system dynamics.
+	
+	\begin{SCfigure}[2][bht]
+		\centering
+		\includegraphics[width=5.5cm]{isolator}
+		\caption{simple schematic of an isolator element connecting a precision machine to a base frame.} \label{fig:dist:isolator}
+	\end{SCfigure}
+	
+	Considering the system in figure \ref{fig:dist:isolator}, its dynamic equation is $m\ddot y + c\dot y + ky = c\dot x + kx$ that, using the Laplace transform, determines the following transmissibility \de{transfer function}
+	\begin{equation}
+		H(s) = \frac{\text{output}}{\text{input}} =\frac{Y(s)}{X(s)} = \frac{cs + k}{ms^2 + cs +k}
+	\end{equation}
+	Substituting $s$ with the complex frequency $j\omega$ it's possible to define the \textbf{natural frequency} $f_0$ of the system and it's \textbf{damping ratio} $\zeta$ as
+	\begin{equation}
+		f_0 = \frac{\omega_0}{2\pi} =  \frac 1 {2\pi}\sqrt{\frac k m}  \qquad \qquad \qquad \zeta= \frac{c}{2\sqrt{km}}
+	\end{equation}
+	With this valued computed we can use Bode's diagram to represent the complex transfer function with his magnitude and phase (as in figure \ref{fig:dist:isolbode})
+	
+	\begin{SCfigure}[2][bht]
+		\centering \includegraphics[width=7cm]{isol-response}
+		\caption{transmissibility of a simple isolator depending on the damping ration $\zeta$.} \label{fig:dist:isolbode}
+	\end{SCfigure}
+	
+	As we can see at the natural frequency $f_0$ there's the \de{resonance} phenomena that, given a fixed input, determines a very high output. The transmissibility function $T_d$ can be rewritten as
+	
+	\textbf{AGGIUNGERE LE EQUAZIONI}
+	
+	
+	\paragraph{Isolating table} An \de{isolating table} (or bench) is an implementation, typically self-levelling, that uses a relatively large mass grounded through a damped spring. Usually precision equipment is placed on top of this kind of benches.
+		
+	\textbf{AAGGIUNGERE GIGURA}
+	
+	If we consider that on top of this table are put not infinitely stiff precision system, than the transmissibility function becomes more complex
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

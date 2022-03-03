@@ -1,7 +1,13 @@
-\documentclass[10 pt,letterpaper,twoside,openright]{book}
+\documentclass[10 pt,letterpaper,oneside,openright]{book}
 
 \input{setup.tex}
 
+\usepackage[osf,sc]{mathpazo}
+%\usepackage[scaled=0.90]{helvet}
+%\usepackage[scaled=0.85]{beramono}
+
+\usepackage[defaultfam,light,tabular,lining]{montserrat}
+\renewcommand*\oldstylenums[1]{{\fontfamily{Montserrat-TOsF}\selectfont #1}}
 
 \begin{document}
 	
@@ -43,10 +49,13 @@
 	
 	\mainmatter	
 	
-	\part{Design of Precision System}
+%	\part{Design of Precision System}
 %	\input{Chapters/systemdesign.tex}
 %	\input{Chapters/precisionsystems.tex}
 %	\input{Chapters/measurements.tex}
-	\input{Chapters/disturbances.tex}
+%	\input{Chapters/disturbances.tex}
 	
+	\part{Digital Manufacturing}
+	\input{Chapters/intro}
+	\input{Chapters/manufacturysys}
 \end{document}

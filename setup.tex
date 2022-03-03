@@ -1,5 +1,5 @@
 
-\usepackage[left=4.5cm, width=14.00cm, height=21.00cm]{geometry}
+\usepackage[width=16.00cm, height=23.00cm]{geometry}
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -28,7 +28,9 @@
 \usepackage{enumerate}
 \usepackage{mathrsfs} 
 \usepackage{wasysym}
-\usepackage{hyperref}                  
+\usepackage{hyperref}        
+\usepackage{array}
+\usepackage{arydshln}        
 
 \graphicspath{{Images/}}
 
@@ -38,9 +40,10 @@
 \captionsetup{font = {it, small}, labelfont={color=NavyBlue, bf}}
 
 
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
 
 \newcommand{\abbe}{\varepsilon_{abbe}}
-
+\newcommand{\pval}{p\textrm{-value}}
 
 
 \newcommand{\de}[1]{\textbf{\textcolor{NavyBlue}{#1}}}
@@ -50,7 +53,7 @@
 		\includegraphics[width=#1 cm]{#3}
 		\caption{#4} \label{#5}
 \end{SCfigure}}
-
+\newcommand{\tabrule}{\rule{\linewidth}{2pt}}
 
 
 
@@ -215,7 +218,7 @@
 \newenvironment{example}[1]{
 	\bfcolor{Periwinkle}
 	\noindent
-	\refstepcounter{exercises}
+	\refstepcounter{examples}
 	{\color{Periwinkle}\textbf{Example \theexamples#1}  } 
 	\vspace{3mm}
 	

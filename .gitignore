@@ -1,7 +1,7 @@
 *.aux
 *.log
 *.idx
-*.pdf
+*-converted-to.*
 *.synctex.gz
 *.toc
 *.out
